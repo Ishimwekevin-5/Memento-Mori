@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
 import DayGrid from './components/DayGrid';
+import TimeDisplay from './components/TimeDisplay';
 import { DayData, YearStats } from './types';
 import { getYearStats, generateDayGrid, formatDate } from './utils';
 import { getReflection } from './services/geminiService';
@@ -31,7 +32,7 @@ const App: React.FC = () => {
   }, [fetchReflection]);
 
   const handleYearChange = (newYear: number) => {
-    if (newYear > 1900 && newYear < 2100) {
+    if (newYear >= 1900 && newYear <= 2100) {
       setYear(newYear);
     }
   };
@@ -41,6 +42,13 @@ const App: React.FC = () => {
       <div className="w-full max-w-6xl animate-in fade-in duration-1000">
         
         <Header stats={stats} onYearChange={handleYearChange} />
+        
+        <div className="mb-12">
+          <TimeDisplay />
+          <div className="mt-4 text-center text-2xl md:text-3xl font-serif tracking-wide text-white/90">
+            "It's not a lot of time, is it?"
+          </div>
+        </div>
 
         <DayGrid 
           days={days} 
@@ -97,7 +105,7 @@ const App: React.FC = () => {
         )}
       </div>
 
-      <footer className="mt-32 text-[10px] text-white/20 uppercase tracking-[0.5em] text-center w-full">
+      <footer className="mt-32 text-[10px] text-white/20 uppercase tracking-[0.5em] text-center w-full pb-8">
         Memento Mori &bull; Powered by Gemini &bull; Created By IshimweKevin
       </footer>
     </div>
